@@ -21,7 +21,9 @@ public class BitSignManager {
 	/** SignManager Implementation */
 
 	/**
-	 * Can be a reference to a pool of required class sign instances.
+	 * Can be set with the reference to a pool of sign instances of required class.
+	 * 
+	 * Defined as class member because different managers can use different sign classes.
 	 */
 	internal var pool:Vector.<BitSign>;
 
