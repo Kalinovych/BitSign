@@ -7,7 +7,7 @@ public class BitSignFactory implements IBitSignFactory {
 	protected var signClass:Class;
 	protected var head:BitSign;
 	
-	public function BitSignFactory( signClass:Class = BitSign ) {
+	public function BitSignFactory( signClass:Class = null ) {
 		this.signClass = signClass || BitSign;
 	}
 
