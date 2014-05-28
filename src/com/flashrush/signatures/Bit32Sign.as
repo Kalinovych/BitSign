@@ -13,14 +13,14 @@ public class Bit32Sign extends BitSign {
 	internal var value:uint;
 
 	public function Bit32Sign() {
-		super( 0 );
+		super( 1 );
 	}
 
 	override protected function initialize():void {
 		value = 0x0;
 	}
 
-	override public function match( sign:BitSign ):Boolean {
+	override public function equal( sign:BitSign ):Boolean {
 		return (value == (sign as Bit32Sign).value);
 	}
 
@@ -36,7 +36,7 @@ public class Bit32Sign extends BitSign {
 	override public function toString( fullLength:Boolean = false ):String {
 		return "[" + formatValue( value ) + "]";
 	}
-	
+
 	override internal function setBit( index:uint ):void {
 		value |= (0x00000001 << index);
 	}

@@ -8,41 +8,31 @@ public class BitSignManager {
 	/**
 	 * Uses in BitSignManager constructor to define a class for BitSign instances.
 	 */
-	public static var signClassProvider:Function = function ( capacityLevel:uint ):Class {
-		if ( capacityLevel == 1 ) {
-			return Bit32Sign;
-		}
-		if ( capacityLevel == 2 ) {
-			return Bit64Sign;
+	public static const SIGN_CLASS_MAP:Vector.<Class> = new <Class>[BitSign, Bit32Sign, Bit64Sign];
+
+	public static function getSignClass( maxBytes:uint ):Class {
+		if ( maxBytes < SIGN_CLASS_MAP.length ) {
+			return SIGN_CLASS_MAP[maxBytes];
 		}
 		return BitSign;
-	};
+	}
 
 	/** SignManager Implementation */
-
-	/**
-	 * Can be set with the reference to a pool of sign instances of required class.
-	 * 
-	 * Defined as class member because different managers can use different sign classes.
-	 */
-	internal var pool:Vector.<BitSign>;
+	private var maxBytes:uint;
+	private var factory:IBitSignFactory;
 
 	internal var elementIndex:uint = 1; // index 0 reserved. And first bit in sign always == 0
 	internal var elementIndexMap:Dictionary = new Dictionary();
 
-	private var elementCapacityLevel:uint;
-	private var signClass:Class;
-
-	public function BitSignManager( elementCapacityLevel:uint = 1, pool:Vector.<BitSign> = null ) {
-		this.elementCapacityLevel = elementCapacityLevel;
-		this.signClass = signClassProvider( elementCapacityLevel );
-		this.pool = pool ? pool : new Vector.<BitSign>();
+	public function BitSignManager( maxBytes:uint = 1, factory:IBitSignFactory = null ) {
+		this.maxBytes = maxBytes;
+		this.factory = factory || new BitSignFactory( getSignClass( maxBytes ) );
 	}
 
 	public function signKeys( elementsAsKeys:Dictionary = null ):BitSign {
-		var sign:BitSign = pool.length > 0 ? pool.pop() : new signClass();
-		sign.signer = this;
-		sign.level = elementCapacityLevel;
+		var sign:BitSign = factory.get();
+		sign.manager = this;
+		sign.bytes = maxBytes;
 		sign.reset();
 		if ( elementsAsKeys ) {
 			for ( var element:* in elementsAsKeys ) {
@@ -53,8 +43,8 @@ public class BitSignManager {
 	}
 
 	public function recycleSign( sign:BitSign ):void {
-		sign.signer = null;
-		pool.push( sign );
+		sign.manager = null;
+		factory.recycle( sign );
 	}
 }
 }

@@ -9,16 +9,20 @@ public class Bit64Sign extends BitSign {
 		super( 2 );
 	}
 
-	override public function match( sign:BitSign ):Boolean {
-		return ( valueList[0] == sign.valueList[0] && valueList[1] == sign.valueList[1] );
+	override public function equal( sign:BitSign ):Boolean {
+		return ( byteMap[0] == sign.byteMap[0] && byteMap[1] == sign.byteMap[1] );
 	}
 
 	override public function partOf( sign:BitSign ):Boolean {
-		return ( valueList[0] == (valueList[0] & sign.valueList[0]) && valueList[1] == (valueList[1] & sign.valueList[1]) );
+		var byte0:uint = byteMap[0];
+		var byte1:uint = byteMap[1];
+		return ( byte0 == (byte0 & sign.byteMap[0]) && byte1 == (byte1 & sign.byteMap[1]) );
 	}
 
 	override public function contains( sign:BitSign ):Boolean {
-		return ( sign.valueList[0] == (sign.valueList[0] & valueList[0]) && sign.valueList[1] == (sign.valueList[1] & valueList[1]) );
+		var byte0:uint = sign.byteMap[0];
+		var byte1:uint = sign.byteMap[1];
+		return ( byte0 == (byte0 & byteMap[0]) && byte1 == (byte1 & byteMap[1]) );
 	}
 }
 }

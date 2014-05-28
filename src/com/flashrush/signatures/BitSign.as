@@ -4,36 +4,39 @@
 package com.flashrush.signatures {
 
 public class BitSign {
-	internal static const CELL_LENGTH:uint = 32;
+	internal static const BYTE_LENGTH:uint = 32;
 
-	internal var valueList:Vector.<uint>;
-	internal var level:uint;
-	internal var signer:BitSignManager;
-
+	internal var byteMap:Vector.<uint>;
+	internal var bytes:uint;
+	internal var manager:BitSignManager;
+	
+	// for a factory pool
+	internal var next:BitSign;
+	
 	// aux variables declaration for iterations :)
 	internal var i:int;
 	internal var aux:uint;
 
 	/**
-	 * 32 elements per level.
-	 * If (elements / 32) will be more then cells an error will occur.
-	 * @param level
+	 * 32 elements per byte.
+	 * If (elements / 32) will be more then bytes an error will occur.
+	 * @param bytes
 	 */
-	public function BitSign( level:uint = 4 ) {
-		this.level = level;
+	public function BitSign( bytes:uint = 4 ) {
+		this.bytes = bytes;
 		initialize();
 	}
 
 	protected function initialize():void {
-		valueList = new Vector.<uint>( level );
+		byteMap = new Vector.<uint>( bytes );
 	}
 
 	public function add( element:* ):void {
-		setBit( signer.elementIndexMap[element] ||= signer.elementIndex++ );
+		setBit( manager.elementIndexMap[element] ||= manager.elementIndex++ );
 	}
 
 	public function remove( element:* ):void {
-		var index:* = signer.elementIndexMap[element];
+		var index:* = manager.elementIndexMap[element];
 		// clear if index defined and > 0
 		if ( index ) {
 			clearBit( index );
@@ -45,9 +48,9 @@ public class BitSign {
 	 * @param sign
 	 * @return
 	 */
-	public function match( sign:BitSign ):Boolean {
-		for ( i = 0; i < level; i++ ) {
-			if ( valueList[i] != sign.valueList[i] ) {
+	public function equal( sign:BitSign ):Boolean {
+		for ( i = 0; i < bytes; i++ ) {
+			if ( byteMap[i] != sign.byteMap[i] ) {
 				return false;
 			}
 		}
@@ -60,9 +63,9 @@ public class BitSign {
 	 * @return
 	 */
 	public function partOf( sign:BitSign ):Boolean {
-		for ( i = 0; i < level; i++ ) {
-			aux = valueList[i];
-			if ( aux != (aux & sign.valueList[i]) ) {
+		for ( i = 0; i < bytes; i++ ) {
+			aux = byteMap[i];
+			if ( aux != (aux & sign.byteMap[i]) ) {
 				return false;
 			}
 		}
@@ -75,9 +78,9 @@ public class BitSign {
 	 * @return
 	 */
 	public function contains( sign:BitSign ):Boolean {
-		for ( i = 0; i < level; i++ ) {
-			aux = sign.valueList[i];
-			if ( aux != (aux & valueList[i]) ) {
+		for ( i = 0; i < bytes; i++ ) {
+			aux = sign.byteMap[i];
+			if ( aux != (aux & byteMap[i]) ) {
 				return false;
 			}
 		}
@@ -86,30 +89,30 @@ public class BitSign {
 
 	public function toString( fullLength:Boolean = false ):String {
 		var str:String = "[";
-		for ( i = 0; i < level; i++ ) {
+		for ( i = 0; i < bytes; i++ ) {
 			//str += valueList[i].toString(2);
-			str += formatValue( valueList[i] );
+			str += formatValue( byteMap[i] );
 		}
 		return str + "]";
 	}
 
 	internal function setBit( index:uint ):void {
-		var cellIndex:uint = index / CELL_LENGTH;
-		var bitIndex:uint = index - (cellIndex * CELL_LENGTH);
-		valueList[cellIndex] |= (0x00000001 << bitIndex);
+		var byteIndex:uint = index / BYTE_LENGTH;
+		var bitIndex:uint = index - (byteIndex * BYTE_LENGTH);
+		byteMap[byteIndex] |= (0x00000001 << bitIndex);
 	}
 
 	internal function clearBit( index:uint ):void {
-		var cellIndex:uint = index / CELL_LENGTH;
-		var bitIndex:uint = index - (cellIndex * CELL_LENGTH);
-		valueList[cellIndex] &= ~(0x00000001 << bitIndex);
+		var byteIndex:uint = index / BYTE_LENGTH;
+		var bitIndex:uint = index - (byteIndex * BYTE_LENGTH);
+		byteMap[byteIndex] &= ~(0x00000001 << bitIndex);
 	}
 
 	internal function reset():void {
-		valueList.length = level;
-		var i:int = level;
+		byteMap.length = bytes;
+		var i:int = bytes;
 		while(i) {
-			valueList[--i] = 0x0;
+			byteMap[--i] = 0x0;
 		}
 	}
 
