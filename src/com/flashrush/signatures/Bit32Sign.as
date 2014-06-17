@@ -29,8 +29,8 @@ public class Bit32Sign extends BitSign {
 	}
 
 	override public function contains( sign:BitSign ):Boolean {
-		aux = (sign as Bit32Sign).value;
-		return (aux == (aux & value));
+		var byte:uint = (sign as Bit32Sign).value;
+		return (byte == (byte & value));
 	}
 
 	override public function toString( fullLength:Boolean = false ):String {

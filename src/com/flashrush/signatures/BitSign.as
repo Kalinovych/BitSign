@@ -13,10 +13,6 @@ public class BitSign {
 	// for a factory pool
 	internal var next:BitSign;
 	
-	// aux variables declaration for iterations :)
-	internal var i:int;
-	internal var aux:uint;
-
 	/**
 	 * 32 elements per byte.
 	 * If (elements / 32) will be more then bytes an error will occur.
@@ -49,6 +45,7 @@ public class BitSign {
 	 * @return
 	 */
 	public function equal( sign:BitSign ):Boolean {
+		var i:uint;
 		for ( i = 0; i < bytes; i++ ) {
 			if ( byteMap[i] != sign.byteMap[i] ) {
 				return false;
@@ -63,9 +60,11 @@ public class BitSign {
 	 * @return
 	 */
 	public function partOf( sign:BitSign ):Boolean {
+		var byte:uint;
+		var i:uint;
 		for ( i = 0; i < bytes; i++ ) {
-			aux = byteMap[i];
-			if ( aux != (aux & sign.byteMap[i]) ) {
+			byte = byteMap[i];
+			if ( byte != (byte & sign.byteMap[i]) ) {
 				return false;
 			}
 		}
@@ -78,9 +77,11 @@ public class BitSign {
 	 * @return
 	 */
 	public function contains( sign:BitSign ):Boolean {
+		var byte:uint;
+		var i:uint;
 		for ( i = 0; i < bytes; i++ ) {
-			aux = sign.byteMap[i];
-			if ( aux != (aux & byteMap[i]) ) {
+			byte = sign.byteMap[i];
+			if ( byte != (byte & byteMap[i]) ) {
 				return false;
 			}
 		}
@@ -89,6 +90,7 @@ public class BitSign {
 
 	public function toString( fullLength:Boolean = false ):String {
 		var str:String = "[";
+		var i:uint;
 		for ( i = 0; i < bytes; i++ ) {
 			//str += valueList[i].toString(2);
 			str += formatValue( byteMap[i] );
