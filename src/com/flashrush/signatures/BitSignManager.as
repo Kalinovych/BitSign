@@ -30,7 +30,7 @@ public class BitSignManager {
 	}
 
 	public function signKeys( elementsAsKeys:Dictionary = null ):BitSign {
-		var sign:BitSign = factory.get();
+		var sign:BitSign = factory.get( maxBytes );
 		sign.manager = this;
 		sign.bytes = maxBytes;
 		sign.reset();

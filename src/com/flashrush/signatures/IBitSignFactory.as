@@ -4,7 +4,7 @@
  */
 package com.flashrush.signatures {
 public interface IBitSignFactory {
-	function get():BitSign;
+	function get( byteCount:uint ):BitSign;
 
 	function recycle( sign:BitSign ):void
 }
