@@ -2,14 +2,17 @@
  * Copyright (c) 2014, FlashRushGames.com
  * @author Alexander Kalinovych
  */
-package com.flashrush.signatures.v2 {
-public class SignFactory implements ISignFactory {
+package flashrush.signatures {
+import flashrush.signatures.api.ISign;
+import flashrush.signatures.bitmask.ByteSign;
+
+public class SignPool {
 	protected var signClass:Class;
 	protected var pool:Vector.<ISign> = new <ISign>[];
 	protected var poolLength:uint = 0;
 
-	public function SignFactory( signClass:Class = null ) {
-		this.signClass = signClass || Sign;
+	public function SignPool( signClass:Class = null ) {
+		this.signClass = signClass || ByteSign;
 	}
 
 	public function get():ISign {
