@@ -4,7 +4,7 @@
  */
 package flashrush.signatures {
 import flashrush.signatures.api.ISign;
-import flashrush.signatures.bitmask.ByteSign;
+import flashrush.signatures.bitwise.ByteSign;
 
 public class SignPool {
 	protected var signClass:Class;

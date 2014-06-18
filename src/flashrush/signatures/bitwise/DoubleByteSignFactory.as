@@ -2,7 +2,7 @@
  * Copyright (c) 2014, FlashRushGames.com
  * @author Alexander Kalinovych
  */
-package flashrush.signatures.bitmask {
+package flashrush.signatures.bitwise {
 import flashrush.signatures.SignPool;
 import flashrush.signatures.api.ISignFactory;
 

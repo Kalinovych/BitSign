@@ -2,9 +2,9 @@
  * Copyright (c) 2014, FlashRushGames.com
  * @author Alexander Kalinovych
  */
-package flashrush.signatures.bitmask {
+package flashrush.signatures.bitwise {
 import flashrush.signatures.api.ISign;
-import flashrush.signatures.bitmask.api.IBitSign;
+import flashrush.signatures.bitwise.api.IBitSign;
 
 public class ByteSign implements IBitSign {
 	internal var byte:uint;
