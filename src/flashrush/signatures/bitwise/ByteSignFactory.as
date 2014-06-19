@@ -3,19 +3,19 @@
  * @author Alexander Kalinovych
  */
 package flashrush.signatures.bitwise {
-import flashrush.signatures.SignPool;
+import flashrush.signatures.utils.SignaturePool;
 import flashrush.signatures.api.ISignFactory;
-import flashrush.signatures.bitwise.api.IBitSign;
+import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class ByteSignFactory extends ABitSignFactory implements ISignFactory {
-	private static var sSharedByteSignPool:SignPool;
+public class ByteSignFactory extends BitSignFactory implements ISignFactory {
+	private static var sSharedByteSignPool:SignaturePool;
 
 	public function ByteSignFactory() {
-		sSharedByteSignPool ||= new SignPool( ByteSign );
+		sSharedByteSignPool ||= new SignaturePool( ByteSign );
 		super( sSharedByteSignPool );
 	}
 
-	public function disposeSign( sign:IBitSign ):void {
+	public function disposeSign( sign:IBitSignature ):void {
 		_recycleSign( sign );
 	}
 }

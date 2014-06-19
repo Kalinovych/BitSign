@@ -3,10 +3,10 @@
  * @author Alexander Kalinovych
  */
 package flashrush.signatures.bitwise {
-import flashrush.signatures.api.ISign;
-import flashrush.signatures.bitwise.api.IBitSign;
+import flashrush.signatures.api.ISignature;
+import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class MultyByteSign implements IBitSign {
+public class MultyByteSign implements IBitSignature {
 	internal var bytes:Vector.<uint>;
 	internal var byteCount:uint;
 
@@ -15,7 +15,7 @@ public class MultyByteSign implements IBitSign {
 		bytes = new Vector.<uint>( this.byteCount );
 	}
 
-	public function equal( sign:ISign ):Boolean {
+	public function equal( sign:ISignature ):Boolean {
 		var other:MultyByteSign = sign as MultyByteSign;
 		if ( !other || other.byteCount != byteCount ) {
 			return false;
@@ -32,7 +32,7 @@ public class MultyByteSign implements IBitSign {
 		return true;
 	}
 
-	public function partOf( sign:ISign ):Boolean {
+	public function partOf( sign:ISignature ):Boolean {
 		var other:MultyByteSign = sign as MultyByteSign;
 		if ( !other || other.byteCount != byteCount ) {
 			return false;
@@ -51,7 +51,7 @@ public class MultyByteSign implements IBitSign {
 		return true;
 	}
 
-	public function hasAllOf( sign:ISign ):Boolean {
+	public function hasAllOf( sign:ISignature ):Boolean {
 		var other:MultyByteSign = sign as MultyByteSign;
 		if ( !other || other.byteCount != byteCount ) {
 			return false;

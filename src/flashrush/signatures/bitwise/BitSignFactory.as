@@ -5,30 +5,30 @@
 package flashrush.signatures.bitwise {
 import flash.utils.Dictionary;
 
-import flashrush.signatures.SignPool;
-import flashrush.signatures.api.ISign;
-import flashrush.signatures.bitwise.api.IBitSign;
+import flashrush.signatures.utils.SignaturePool;
+import flashrush.signatures.api.ISignature;
+import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class ABitSignFactory {
-	protected var pool:SignPool;
+public class BitSignFactory {
+	protected var pool:SignaturePool;
 
 	protected var elementIndex:uint;
 	protected var elementIndexMap:Dictionary = new Dictionary();
 
-	public function ABitSignFactory( pool:SignPool ) {
+	public function BitSignFactory( pool:SignaturePool ) {
 		this.pool = pool;
 	}
 
-	public function signKeys( map:Object ):ISign {
-		var sign:IBitSign = _allocateSign();
+	public function signKeys( map:Object ):ISignature {
+		var sign:IBitSignature = _allocateSign();
 		for ( var key:* in map ) {
 			sign.set( _indexElement( key ) );
 		}
 		return sign;
 	}
 
-	public function signValues( iterable:Object ):ISign {
-		var sign:IBitSign = _allocateSign();
+	public function signValues( iterable:Object ):ISignature {
+		var sign:IBitSignature = _allocateSign();
 		for each( var value:* in iterable ) {
 			sign.set( _indexElement( value ) );
 		}
@@ -36,12 +36,12 @@ public class ABitSignFactory {
 	}
 	
 	[Inline]
-	protected final function _allocateSign():IBitSign {
-		return pool.get() as IBitSign;
+	protected final function _allocateSign():IBitSignature {
+		return pool.get() as IBitSignature;
 	}
 
 	[Inline]
-	protected final function _recycleSign( sign:IBitSign ):void {
+	protected final function _recycleSign( sign:IBitSignature ):void {
 		pool.recycle( sign );
 	}
 

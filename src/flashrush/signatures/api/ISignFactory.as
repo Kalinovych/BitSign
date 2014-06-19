@@ -4,8 +4,11 @@
  */
 package flashrush.signatures.api {
 public interface ISignFactory {
-	function signKeys( map:Object ):ISign;
+	
+	//function getContext():*;
+	
+	function signKeys( map:Object ):ISignature;
 
-	function signValues( iterable:Object ):ISign;
+	function signValues( iterable:Object ):ISignature;
 }
 }

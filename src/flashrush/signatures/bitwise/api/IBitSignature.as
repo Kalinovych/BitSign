@@ -3,9 +3,9 @@
  * @author Alexander Kalinovych
  */
 package flashrush.signatures.bitwise.api {
-import flashrush.signatures.api.ISign;
+import flashrush.signatures.api.ISignature;
 
-public interface IBitSign extends ISign, IBitMask {
+public interface IBitSignature extends ISignature, IBitMask {
 
 }
 }

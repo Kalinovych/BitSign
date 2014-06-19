@@ -3,26 +3,26 @@
  * @author Alexander Kalinovych
  */
 package flashrush.signatures.bitwise {
-import flashrush.signatures.api.ISign;
-import flashrush.signatures.bitwise.api.IBitSign;
+import flashrush.signatures.api.ISignature;
+import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class DoubleByteSign implements IBitSign {
+public class DoubleByteSign implements IBitSignature {
 	internal var byte0:uint;
 	internal var byte1:uint;
 
 	public function DoubleByteSign() {}
 
-	public function equal( sign:ISign ):Boolean {
+	public function equal( sign:ISignature ):Boolean {
 		var other:DoubleByteSign = sign as DoubleByteSign;
 		return (byte0 == other.byte0 && byte1 == other.byte1);
 	}
 
-	public function partOf( sign:ISign ):Boolean {
+	public function partOf( sign:ISignature ):Boolean {
 		var other:DoubleByteSign = sign as DoubleByteSign;
 		return ( byte0 == (byte0 && other.byte0) && byte1 == (byte1 && other.byte1) );
 	}
 
-	public function hasAllOf( sign:ISign ):Boolean {
+	public function hasAllOf( sign:ISignature ):Boolean {
 		var other:DoubleByteSign = sign as DoubleByteSign;
 		var otherByte0:uint = other.byte0;
 		var otherByte1:uint = other.byte1;
