@@ -28,16 +28,16 @@ public class OneByteSignature implements IBitSignature {
 	}
 
 	public function equal( sign:ISignature ):Boolean {
-		return (byte == (sign as OneByteSignature).byte);
+		return ( (sign as OneByteSignature).byte == byte );
 	}
 
 	public function partOf( sign:ISignature ):Boolean {
-		return (byte == (byte & (sign as OneByteSignature).byte));
+		return ( (byte & (sign as OneByteSignature).byte) == byte );
 	}
 
 	public function hasAllOf( sign:ISignature ):Boolean {
 		var otherByte:uint = (sign as OneByteSignature).byte;
-		return (otherByte == (otherByte & byte));
+		return ( (byte & otherByte) == otherByte );
 	}
 
 	public function toString( fillWithZeros:Boolean = false ):String {

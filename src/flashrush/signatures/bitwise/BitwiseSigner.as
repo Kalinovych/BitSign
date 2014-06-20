@@ -20,12 +20,6 @@ public class BitwiseSigner implements ISigner {
 		this.factory = factory || new BitSignatureFactory();
 	}
 
-	public function signElement( element:Object ):ISignature {
-		var signature:IBitSignature = factory.createSignature();
-		signature.set( $_indexElement( element ) );
-		return signature;
-	}
-
 	public function signKeys( map:Object ):ISignature {
 		var signature:IBitSignature = factory.createSignature();
 		for ( var key:* in map ) {
@@ -40,6 +34,22 @@ public class BitwiseSigner implements ISigner {
 			signature.set( $_indexElement( value ) );
 		}
 		return signature;
+	}
+
+	public function signElement( element:Object ):ISignature {
+		var signature:IBitSignature = factory.createSignature();
+		signature.set( $_indexElement( element ) );
+		return signature;
+	}
+
+	public function includeTo( element:Object, signature:ISignature ):void {
+		(signature as IBitSignature).set( $_indexElement( element ) );
+	}
+
+	public function excludeFrom( element:Object, signature:ISignature ):void {
+		if ( elementIndexMap[element] !== undefined ) {
+			(signature as IBitSignature).unset( elementIndexMap[element] );
+		}
 	}
 
 	public function disposeSign( signature:ISignature ):void {
