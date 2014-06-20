@@ -3,12 +3,13 @@
  * @author Alexander Kalinovych
  */
 package flashrush.signatures.api {
-public interface ISignFactory {
-	
-	//function getContext():*;
-	
+public interface ISigner {
+	function signElement( element:Object ):ISignature;
+
 	function signKeys( map:Object ):ISignature;
 
 	function signValues( iterable:Object ):ISignature;
+
+	function disposeSign( signature:ISignature ):void;
 }
 }

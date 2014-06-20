@@ -6,10 +6,10 @@ package flashrush.signatures.bitwise {
 import flashrush.signatures.api.ISignature;
 import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class ByteSign implements IBitSignature {
+public class OneByteSignature implements IBitSignature {
 	internal var byte:uint;
 
-	public function ByteSign() {}
+	public function OneByteSignature() {}
 
 	public function set( bitIndex:uint ):void {
 		byte |= (1 << bitIndex);
@@ -28,16 +28,16 @@ public class ByteSign implements IBitSignature {
 	}
 
 	public function equal( sign:ISignature ):Boolean {
-		return (byte == (sign as ByteSign).byte);
+		return (byte == (sign as OneByteSignature).byte);
 	}
 
 	public function partOf( sign:ISignature ):Boolean {
-		return (byte == (byte & (sign as ByteSign).byte));
+		return (byte == (byte & (sign as OneByteSignature).byte));
 	}
 
 	public function hasAllOf( sign:ISignature ):Boolean {
-		var byte:uint = (sign as ByteSign).byte;
-		return (byte == (byte & byte));
+		var otherByte:uint = (sign as OneByteSignature).byte;
+		return (otherByte == (otherByte & byte));
 	}
 
 	public function toString( fillWithZeros:Boolean = false ):String {

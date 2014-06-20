@@ -2,19 +2,21 @@
  * Copyright (c) 2014, FlashRushGames.com
  * @author Alexander Kalinovych
  */
-package flashrush.signatures {
+package flashrush.signatures.bitwise {
 import flash.utils.Dictionary;
 
 import flashrush.signatures.api.ISignature;
+import flashrush.signatures.api.ISigner;
 import flashrush.signatures.bitwise.api.IBitSignature;
+import flashrush.signatures.bitwise.api.IBitSignatureFactory;
 
-public class ObjectSigner {
-	protected var factory:BitSignatureFactory;
+public class BitwiseSigner implements ISigner {
+	protected var factory:IBitSignatureFactory;
 
 	protected var elementIndex:uint;
 	protected var elementIndexMap:Dictionary = new Dictionary();
 
-	public function ObjectSigner( factory:BitSignatureFactory = null ) {
+	public function BitwiseSigner( factory:IBitSignatureFactory = null ) {
 		this.factory = factory || new BitSignatureFactory();
 	}
 
@@ -41,7 +43,7 @@ public class ObjectSigner {
 	}
 
 	public function disposeSign( signature:ISignature ):void {
-		factory.disposeSignture( signature );
+		factory.disposeSignature( signature as IBitSignature );
 	}
 
 	[Inline]

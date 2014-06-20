@@ -6,24 +6,24 @@ package flashrush.signatures.bitwise {
 import flashrush.signatures.api.ISignature;
 import flashrush.signatures.bitwise.api.IBitSignature;
 
-public class DoubleByteSign implements IBitSignature {
+public class TwoBytesSignature implements IBitSignature {
 	internal var byte0:uint;
 	internal var byte1:uint;
 
-	public function DoubleByteSign() {}
+	public function TwoBytesSignature() {}
 
 	public function equal( sign:ISignature ):Boolean {
-		var other:DoubleByteSign = sign as DoubleByteSign;
+		var other:TwoBytesSignature = sign as TwoBytesSignature;
 		return (byte0 == other.byte0 && byte1 == other.byte1);
 	}
 
 	public function partOf( sign:ISignature ):Boolean {
-		var other:DoubleByteSign = sign as DoubleByteSign;
+		var other:TwoBytesSignature = sign as TwoBytesSignature;
 		return ( byte0 == (byte0 && other.byte0) && byte1 == (byte1 && other.byte1) );
 	}
 
 	public function hasAllOf( sign:ISignature ):Boolean {
-		var other:DoubleByteSign = sign as DoubleByteSign;
+		var other:TwoBytesSignature = sign as TwoBytesSignature;
 		var otherByte0:uint = other.byte0;
 		var otherByte1:uint = other.byte1;
 		return ( otherByte0 == (otherByte0 & byte0) && otherByte1 == (otherByte1 & byte1) );
