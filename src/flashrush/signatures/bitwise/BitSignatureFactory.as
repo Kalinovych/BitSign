@@ -5,21 +5,30 @@
 package flashrush.signatures.bitwise {
 import flashrush.signatures.bitwise.api.IBitSignature;
 import flashrush.signatures.bitwise.api.IBitSignatureFactory;
-import flashrush.signatures.utils.SignaturePool;
 
 public class BitSignatureFactory implements IBitSignatureFactory {
-	protected var _pool:SignaturePool;
+	protected var _signClass:Class;
+	protected var _pool:Vector.<IBitSignature> = new <IBitSignature>[];
+	protected var _poolSize:uint = 0;
 
 	public function BitSignatureFactory( bitSignatureClass:Class = null ) {
-		_pool = new SignaturePool( bitSignatureClass || BitSignature );
+		_signClass = bitSignatureClass || BitSignature;
 	}
 
 	public function createSignature():IBitSignature {
-		return _pool.get() as IBitSignature;
+		if ( _poolSize == 0 ) {
+			return new _signClass();
+		}
+
+		_poolSize--;
+		var sign:IBitSignature = _pool[_poolSize];
+		_pool.length = _poolSize;
+		return sign;
 	}
 
 	public function disposeSignature( signature:IBitSignature ):void {
-		_pool.recycle( signature );
+		_pool[_poolSize] = signature;
+		_poolSize++;
 	}
 }
 }
