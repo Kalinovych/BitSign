@@ -15,7 +15,7 @@ public class BitSignature implements IBitSignature {
 		bytes = new Vector.<uint>( this.byteCount );
 	}
 
-	public function equal( sign:ISignature ):Boolean {
+	public function equals( sign:ISignature ):Boolean {
 		var other:BitSignature = sign as BitSignature;
 		if ( !other || other.byteCount != byteCount ) {
 			return false;

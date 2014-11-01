@@ -27,7 +27,7 @@ public class OneByteSignature implements IBitSignature {
 		byte = 0x0;
 	}
 
-	public function equal( sign:ISignature ):Boolean {
+	public function equals( sign:ISignature ):Boolean {
 		return ( (sign as OneByteSignature).byte == byte );
 	}
 

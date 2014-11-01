@@ -12,7 +12,7 @@ public class TwoBytesSignature implements IBitSignature {
 
 	public function TwoBytesSignature() {}
 
-	public function equal( sign:ISignature ):Boolean {
+	public function equals( sign:ISignature ):Boolean {
 		var other:TwoBytesSignature = sign as TwoBytesSignature;
 		return (byte0 == other.byte0 && byte1 == other.byte1);
 	}

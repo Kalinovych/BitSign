@@ -7,7 +7,7 @@ public interface ISignature {
 	/**
 	 * Compares flags of this and other signature and return true if they are equal. 
 	 */
-	function equal( signature:ISignature ):Boolean;
+	function equals( signature:ISignature ):Boolean;
 
 	/**
 	 * Checks is other signature has all flags of this signature
