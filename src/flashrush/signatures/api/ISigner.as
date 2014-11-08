@@ -10,6 +10,12 @@ public interface ISigner {
 
 	function signValues( iterable:Object ):ISignature;
 	
+	function signFiltered( iterable:Object, callback:Function ):ISignature
+	
+	function signEmpty():ISignature;
+	
+	function provideFlag( element:* ):int;
+	
 	function disposeSign( signature:ISignature ):void;
 
 	function includeTo( element:Object, signature:ISignature ):void;

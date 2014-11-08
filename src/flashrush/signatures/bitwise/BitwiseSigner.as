@@ -12,58 +12,88 @@ import flashrush.signatures.bitwise.api.IBitSignatureFactory;
 
 public class BitwiseSigner implements ISigner {
 	protected var factory:IBitSignatureFactory;
-
-	protected var elementIndex:uint;
-	protected var elementIndexMap:Dictionary = new Dictionary();
-
+	
+	protected var flagMap:Dictionary = new Dictionary();
+	protected var flagCount:uint;
+	
 	public function BitwiseSigner( factory:IBitSignatureFactory = null ) {
 		this.factory = factory || new BitSignatureFactory();
 	}
-
+	
 	public function signKeys( map:Object ):ISignature {
-		var signature:IBitSignature = factory.createSignature();
+		const signature:IBitSignature = factory.createSignature();
 		for ( var key:* in map ) {
-			signature.set( $_indexElement( key ) );
+			signature.set( $provideFlag( key ) );
 		}
 		return signature;
 	}
-
+	
 	public function signValues( iterable:Object ):ISignature {
-		var signature:IBitSignature = factory.createSignature();
-		for each( var value:* in iterable ) {
-			signature.set( $_indexElement( value ) );
+		const signature:IBitSignature = factory.createSignature();
+		for each( var item:* in iterable ) {
+			signature.set( $provideFlag( item ) );
 		}
 		return signature;
 	}
-
+	
+	public function signFiltered( iterable:Object, callback:Function ):ISignature {
+		const signature:IBitSignature = factory.createSignature();
+		for each( var item:* in iterable ) {
+			if ( callback( item ) ) {
+				signature.set( $provideFlag( item ) );
+			}
+		}
+		return signature;
+	}
+	
 	public function signElement( element:Object ):ISignature {
-		var signature:IBitSignature = factory.createSignature();
-		signature.set( $_indexElement( element ) );
+		const signature:IBitSignature = factory.createSignature();
+		signature.set( $provideFlag( element ) );
 		return signature;
 	}
-
+	
 	public function includeTo( element:Object, signature:ISignature ):void {
-		(signature as IBitSignature).set( $_indexElement( element ) );
+		(signature as IBitSignature).set( $provideFlag( element ) );
 	}
-
+	
 	public function excludeFrom( element:Object, signature:ISignature ):void {
-		if ( elementIndexMap[element] !== undefined ) {
-			(signature as IBitSignature).unset( elementIndexMap[element] );
+		if ( element in flagMap ) {
+			(signature as IBitSignature).unset( flagMap[element] );
 		}
 	}
-
+	
 	public function disposeSign( signature:ISignature ):void {
 		factory.disposeSignature( signature as IBitSignature );
 	}
-
+	
+	
+	
+	public function signEmpty():ISignature {
+		return factory.createSignature();
+	}
+	
+	public function provideFlag( element:* ):int {
+		return ( element in flagMap ? flagMap[element] : -1 );
+	}
+	
+	
+	
+	
 	[Inline]
-	protected final function $_indexElement( element:* ):uint {
-		if ( elementIndexMap[element] !== undefined ) {
+	protected final function $provideFlag( element:* ):uint {
+		if ( element in flagMap ) {
+			return flagMap[element];
+		}
+		flagMap[element] = flagCount;
+		flagCount++;
+		return flagCount;
+		
+		/*if ( elementIndexMap[element] !== undefined ) {
 			return elementIndexMap[element];
 		}
-		elementIndex++;
-		elementIndexMap[element] = elementIndex;
-		return elementIndex;
+		availableIndex++;
+		elementIndexMap[element] = availableIndex;
+		return availableIndex;*/
 	}
 }
 }
