@@ -21,9 +21,9 @@ public class BitSignature implements IBitSignature {
 			return false;
 		}
 
-		var i:uint = byteCount;
+		var i:int = byteCount;
 		while ( i ) {
-			i--;
+			--i;
 			if ( bytes[i] != other.bytes[i] ) {
 				return false;
 			}
@@ -41,7 +41,7 @@ public class BitSignature implements IBitSignature {
 		var i:uint = byteCount;
 		var byte:uint;
 		while ( i ) {
-			i--;
+			--i;
 			byte = bytes[i];
 			if ( byte != (byte & other.bytes[i]) ) {
 				return false;
@@ -60,7 +60,7 @@ public class BitSignature implements IBitSignature {
 		var i:uint = byteCount;
 		var otherByte:uint;
 		while ( i ) {
-			i--;
+			--i;
 			otherByte = other.bytes[i];
 			if ( otherByte != (otherByte & bytes[i]) ) {
 				return false;
@@ -83,9 +83,9 @@ public class BitSignature implements IBitSignature {
 	}
 
 	public function clear():void {
-		var i:uint = byteCount;
+		var i:int = byteCount;
 		while ( i ) {
-			i--;
+			--i;
 			bytes[i] = 0x0;
 		}
 	}
